@@ -1,13 +1,11 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Reddit+Sans:ital,wght@0,200..900;1,200..900&display=swap');
-
   :root {
     /* Variables */
     --theme-bg: var(--theme-elevation-0);
 --theme-input-bg: var(--theme-elevation-0);
 --theme-text: var(--theme-elevation-700);
 --theme-overlay: rgba(5, 5, 5, 0.5);
---font-body: "Reddit Sans", sans-serif;
+--font-body: "Noto Sans", sans-serif;
 --font-mono: monospace;
 --font-serif: 'Merriweather', serif;
 --style-radius-s: 4px;
@@ -140,9 +138,7 @@
     --theme-accent-950: var(--color-accent-950);
     --theme-accent-1000: var(--color-accent-1000);
   }
-  .graphic-icon path{
-    fill:#D6006B;
-  }
+  
   /* Nav Button */
   .hamburger__wrapper {
     background-color: var(--theme-elevation-100);

@@ -6,12 +6,34 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
-
+import { s3Storage } from '@payloadcms/storage-s3'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { Testimonials } from './collections/Testimonials'
+import { Themes } from './collections/Themes'
+import { Clients } from './collections/Clients'
+import { Newsletters } from './collections/Newsletters'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+
+interface Envs {
+  bucket: string
+  secretAccessKey: string
+  accessKeyId: string
+  region: string
+  dbURI: string
+  payloadSecret: string
+}
+const envs: Envs = {
+  bucket: process.env.AWS_S3_BUCKET_NAME || '',
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
+  region: process.env.AWS_REGION || '',
+  dbURI: process.env.DATABASE_URI || '',
+  payloadSecret: process.env.PAYLOAD_SECRET || '',
+}
+const { bucket, secretAccessKey, accessKeyId, region, dbURI, payloadSecret } = envs
 
 export default buildConfig({
   admin: {
@@ -20,18 +42,33 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media],
+  collections: [Users, Media, Testimonials, Themes, Clients, Newsletters],
   editor: lexicalEditor(),
-  secret: process.env.PAYLOAD_SECRET || '',
+  secret: payloadSecret,
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   db: mongooseAdapter({
-    url: process.env.DATABASE_URI || '',
+    url: dbURI,
   }),
   sharp,
   plugins: [
     payloadCloudPlugin(),
+    s3Storage({
+      collections: {
+        media: true,
+      },
+      bucket: bucket,
+      config: {
+        credentials: {
+          accessKeyId: accessKeyId,
+          secretAccessKey: secretAccessKey,
+        },
+        region: region,
+        // ... Other S3 configuration
+      },
+    }),
+
     // storage-adapter-placeholder
   ],
 })
