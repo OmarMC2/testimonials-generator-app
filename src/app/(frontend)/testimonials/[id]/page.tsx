@@ -6,8 +6,8 @@ interface PageProps {
     id: string
   }
 }
-export default function TestimonialPage({ params }: PageProps) {
-  const { id } = params
+export default async function TestimonialPage({ params }: PageProps) {
+  const { id } = await params
 
   return (
     <>

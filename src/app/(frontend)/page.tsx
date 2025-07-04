@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url'
 
 import config from '@/payload.config'
 import './styles.css'
+import { redirect } from 'next/navigation'
 
 export default async function HomePage() {
   const headers = await getHeaders()
@@ -14,7 +15,7 @@ export default async function HomePage() {
   const { user } = await payload.auth({ headers })
 
   const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`
-
+  redirect('/admin/login')
   return (
     <div className="home">
       <div className="content">
