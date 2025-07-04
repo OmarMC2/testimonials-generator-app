@@ -1,6 +1,6 @@
 import type { Payload } from 'payload'
 import ExcelJS from 'exceljs'
-import capitalizer from '@/assets/capitalizer'
+import capitalizer from '../assets/capitalizer'
 export const excelExport = async (req: Request & { payload: Payload }) => {
   try {
     // Obtener datos del body
