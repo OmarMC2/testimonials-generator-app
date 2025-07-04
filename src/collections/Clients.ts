@@ -1,5 +1,4 @@
 import type { CollectionConfig } from 'payload'
-import monitoristPermissons from '../access/monitoristPermissions'
 
 export const Clients: CollectionConfig = {
   slug: 'clients',
@@ -23,7 +22,7 @@ export const Clients: CollectionConfig = {
       admin: {
         readOnly: true,
         description: 'Monitorists asignados (gestión desde el perfil de cada monitorist)',
-        condition: (data) => true, // Siempre visible pero no editable
+        condition: (_data) => true, // Siempre visible pero no editable
       },
       access: {
         update: () => false, // Nunca permitir edición directa
@@ -49,7 +48,7 @@ export const Clients: CollectionConfig = {
       admin: {
         readOnly: true,
         description: 'Testimonials asignados desde la edición de cada testimonial',
-        condition: (data) => true, // Siempre visible pero no editable
+        condition: (_data) => true, // Siempre visible pero no editable
       },
       access: {
         update: () => false, // Nunca permitir edición directa
@@ -63,7 +62,7 @@ export const Clients: CollectionConfig = {
       admin: {
         readOnly: true,
         description: 'Themes asignados desde la edición de cada theme',
-        condition: (data) => true, // Siempre visible pero no editable
+        condition: (_data) => true, // Siempre visible pero no editable
       },
       access: {
         update: () => false, // Nunca permitir edición directa

@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
 import LinkBox from './LinkBox'
 import PropertyBox from './PropertyBox'
-import RichText from '../RichText/'
+import RichText from '@/components/richText'
+
 interface Testimonial {
   id: string
   type: 'Impreso' | 'digital' | 'rrss'
@@ -18,7 +18,7 @@ interface Testimonial {
   media?: string
   journalist?: string
   extract?: string
-  insights?: any // O cualquier tipo que uses para richText en el frontend
+  insights?: unknown // O cualquier tipo que uses para richText en el frontend
   subtitle?: string
   client?: string
   likes?: number
@@ -101,13 +101,7 @@ export default function RRSSBody({ testimonial }: Testimonial) {
           </div>
           <div className="testimonial-digital-main">
             {images.map((image) => (
-              <img
-                src={image.image.url}
-                alt={image.image.alt}
-                key={image.id}
-                width={image.image.width}
-                height={image.image.height}
-              />
+              <img src={image.image.url} alt={image.image.alt} key={image.id} />
             ))}
           </div>
         </div>

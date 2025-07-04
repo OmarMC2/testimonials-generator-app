@@ -7,7 +7,7 @@ interface PageProps {
   }
 }
 export default async function TestimonialPage({ params }: PageProps) {
-  const { id } = await params
+  const { id } = params
 
   return (
     <>

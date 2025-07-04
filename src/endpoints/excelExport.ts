@@ -1,6 +1,7 @@
+import type { Payload } from 'payload'
 import ExcelJS from 'exceljs'
 import capitalizer from '@/assets/capitalizer'
-export const excelExport = async (req) => {
+export const excelExport = async (req: Request & { payload: Payload }) => {
   try {
     // Obtener datos del body
     //const payload = await getPayload({config})
@@ -25,7 +26,7 @@ export const excelExport = async (req) => {
     }
 
     // Obtener payload del request extendido (necesitas acceso a Payload)
-    const payload = (req as any).payload
+    const payload = req.payload
     const serverURL = payload.config.serverURL
     console.log('🚀 ~ excelExport ~ serverURL:', serverURL)
     if (!payload) {
@@ -144,7 +145,7 @@ export const excelExport = async (req) => {
         'Content-Disposition': `attachment; filename=${todayDate}.xlsx`,
       },
     })
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error en exportExcel:', error)
     return new Response(JSON.stringify({ error: 'Error al generar el reporte' }), {
       status: 500,

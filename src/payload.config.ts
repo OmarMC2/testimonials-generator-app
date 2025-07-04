@@ -15,7 +15,7 @@ import { Themes } from './collections/Themes'
 import { Clients } from './collections/Clients'
 
 import { excelExport } from './endpoints/excelExport'
-import { Newsletteres } from './collections/Newsletteres'
+import { Newsletters } from './collections/Newsletters'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -56,12 +56,12 @@ export default buildConfig({
       graphics: {
         Logo: './components/Login',
       },
-      afterNavLinks: ['./components/ExcellExportNavItem.jsx'],
-      afterDashboard: ['./components/ExcellExportSquareItem.jsx'],
+      afterNavLinks: ['./components/excel/ExcellExportNavItem.tsx'],
+      afterDashboard: ['./components/excel/ExcellExportSquareItem.tsx'],
     },
   },
   serverURL: serverUrl,
-  collections: [Users, Media, Testimonials, Newsletteres, Themes, Clients],
+  collections: [Users, Media, Testimonials, Newsletters, Themes, Clients],
   editor: lexicalEditor(),
   secret: payloadSecret,
   typescript: {

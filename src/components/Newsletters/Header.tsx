@@ -4,9 +4,8 @@ import Logo from '../../custom/Logo'
 export default function Header({ frecuency, client, }) {
   const [title, setTitle] = useState('');
   useEffect(()=>{
-
       setTitle(`Monitoreo ${frecuency} |`)
-  },[])
+  },[frecuency])
     return (
     <header>
       <div className="header-container">

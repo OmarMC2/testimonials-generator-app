@@ -8,7 +8,7 @@ interface PageProps {
   }
 }
 export default async function NewsletterPage({ params }: PageProps) {
-  const { id } = await params
+  const { id } = params
 
   return (
     <>

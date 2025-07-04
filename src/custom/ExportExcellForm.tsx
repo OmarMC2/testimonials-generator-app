@@ -32,7 +32,7 @@ export default function ExportExcellForm() {
     if (!user) {
       return redirect('/admin/login/')
     }
-  }, [])
+  }, [user])
 
   useEffect(() => {
     const fetchOptions = async () => {
@@ -53,7 +53,7 @@ export default function ExportExcellForm() {
 
         setClients(dataClients.docs)
         setThemes(dataThemes.docs)
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error('Error loading options:', err)
         setError('No se pudieron cargar las opciones. Intente más tarde.')
       } finally {
@@ -108,7 +108,7 @@ export default function ExportExcellForm() {
       a.click()
       document.body.removeChild(a)
       window.URL.revokeObjectURL(url)
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Download error:', err)
       setError(err.message || 'Error al generar el archivo Excel')
     } finally {

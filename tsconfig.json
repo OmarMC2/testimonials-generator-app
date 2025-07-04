@@ -31,7 +31,7 @@
     ".next/types/**/*.ts",
     "src/endpoints/excelExport.ts",
     "src/components/RichText",
-    "src/components/WithAuth.jsx",
+    "src/components/WithAuth.tsx",
     "src/access/monitoristPermissions.js"
   ],
   "exclude": ["node_modules"]

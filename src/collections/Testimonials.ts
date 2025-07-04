@@ -41,7 +41,7 @@ export const Testimonials: CollectionConfig = {
       required: true,
       hooks: {
         afterChange: [
-          async ({ value, operation, previousValue, req, originalDoc }) => {
+          async ({ value, operation: _operation, previousValue, req, originalDoc }) => {
             const { payload } = req
             const currentClientId = value
             const pastClientId = previousValue || ''

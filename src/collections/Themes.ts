@@ -16,7 +16,7 @@ export const Themes: CollectionConfig = {
       hasMany: true,
       hooks: {
         afterChange: [
-          async ({ value, operation, previousValue, req, originalDoc }) => {
+          async ({ value, operation: _operation, previousValue, req, originalDoc }) => {
             const { payload } = req
 
             // Obtener el ID del usuario actual (monitorist)
