@@ -1,6 +1,9 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Reddit+Sans:ital,wght@0,200..900;1,200..900&display=swap');
 
+
+
+
   :root {
     /* Variables */
     --theme-bg: var(--theme-elevation-0);
@@ -14,7 +17,7 @@
 --style-radius-m: 8px;
 --style-radius-l: 16px;
 --nav-width: 275px;
-  
+  --second-font:"Krona One"
     /* Color Shades */
     --color-base-0: #ffffff;
   --color-base-50: #fcedf5;
@@ -158,7 +161,6 @@
   }
 
 /* Nav Group Toggle (empty) */
-  .nav-group__toggle {}
 
 /* Nav Group Icon */
   .nav-group__indicator svg .stroke {
@@ -177,7 +179,7 @@
 
 /* Dashboard Card Labels */
   .dashboard__label {
-    fontFamily: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   font-family: Arial;
   font-weight: bold;
   }
@@ -191,7 +193,7 @@
 
 /* Dashboard Card Title */
   .card__title {
-    fontFamily: Impact;
+    font-family: "Reddit Sans";
   font-size: 19px;
   }
 
@@ -221,25 +223,8 @@
   }
 
 /* Document Header (empty) */
-  .doc-header__title {}
+ 
 
-/* Success Toast Close Button (empty) */
-  .Toastify .Toastify__close-button--success {}
-
-/* Success Toast Progress Bar (empty) */
-  .Toastify .Toastify__toast--success .Toastify__progress-bar {}
-
-/* Success Toast (empty) */
-  .Toastify .Toastify__toast--success {}
-
-/* Success Toast Close Button (empty) */
-  .Toastify .Toastify__close-button--error {}
-
-/* Success Toast Progress Bar (empty) */
-  .Toastify .Toastify__toast--error .Toastify__progress-bar {}
-
-/* Success Toast (empty) */
-  .Toastify .Toastify__toast--error {}
 
 /* Collapsible */
   .collapsible {
@@ -266,12 +251,7 @@
     background-color: var(--theme-elevation-50);
   }
 
-/* Search Filter Wrapper (empty) */
-  .list-controls__wrap {}
 
-/* Search  Input (empty) */
-  .search-filter__input {}
-  
   html[data-theme='dark'] {
     /* Dark Theme Colors */
     --theme-accent-0: var(--color-accent-900);

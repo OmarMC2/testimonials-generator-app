@@ -10,9 +10,12 @@ import { s3Storage } from '@payloadcms/storage-s3'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Testimonials } from './collections/Testimonials'
+
 import { Themes } from './collections/Themes'
 import { Clients } from './collections/Clients'
-import { Newsletters } from './collections/Newsletters'
+
+import { excelExport } from './endpoints/excelExport'
+import { Newsletteres } from './collections/Newsletteres'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -24,6 +27,7 @@ interface Envs {
   region: string
   dbURI: string
   payloadSecret: string
+  serverUrl: string
 }
 const envs: Envs = {
   bucket: process.env.AWS_S3_BUCKET_NAME || '',
@@ -32,8 +36,9 @@ const envs: Envs = {
   region: process.env.AWS_REGION || '',
   dbURI: process.env.DATABASE_URI || '',
   payloadSecret: process.env.PAYLOAD_SECRET || '',
+  serverUrl: process.env.SERVER_URL || '',
 }
-const { bucket, secretAccessKey, accessKeyId, region, dbURI, payloadSecret } = envs
+const { bucket, secretAccessKey, accessKeyId, region, dbURI, payloadSecret, serverUrl } = envs
 
 export default buildConfig({
   admin: {
@@ -41,8 +46,22 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    components: {
+      views: {
+        'export-excel-page': {
+          path: '/export-excel',
+          Component: './custom/ExportExcellPage.tsx',
+        },
+      },
+      graphics: {
+        Logo: './components/Login',
+      },
+      afterNavLinks: ['./components/ExcellExportNavItem.jsx'],
+      afterDashboard: ['./components/ExcellExportSquareItem.jsx'],
+    },
   },
-  collections: [Users, Media, Testimonials, Themes, Clients, Newsletters],
+  serverURL: serverUrl,
+  collections: [Users, Media, Testimonials, Newsletteres, Themes, Clients],
   editor: lexicalEditor(),
   secret: payloadSecret,
   typescript: {
@@ -70,5 +89,12 @@ export default buildConfig({
     }),
 
     // storage-adapter-placeholder
+  ],
+  endpoints: [
+    {
+      path: '/export-excel',
+      method: 'post',
+      handler: excelExport,
+    },
   ],
 })

@@ -70,9 +70,9 @@ export interface Config {
     users: User;
     media: Media;
     testimonials: Testimonial;
+    newsletters: Newsletter;
     themes: Theme;
     clients: Client;
-    newsletters: Newsletter;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -82,9 +82,9 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
+    newsletters: NewslettersSelect<false> | NewslettersSelect<true>;
     themes: ThemesSelect<false> | ThemesSelect<true>;
     clients: ClientsSelect<false> | ClientsSelect<true>;
-    newsletters: NewslettersSelect<false> | NewslettersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -127,6 +127,9 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: string;
+  name: string;
+  clients?: (string | Client)[] | null;
+  role: 'admin' | 'monitorist';
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -137,6 +140,87 @@ export interface User {
   loginAttempts?: number | null;
   lockUntil?: string | null;
   password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "clients".
+ */
+export interface Client {
+  id: string;
+  name?: string | null;
+  /**
+   * Monitorists asignados (gestión desde el perfil de cada monitorist)
+   */
+  monitorists?: (string | User)[] | null;
+  /**
+   * Testimonials asignados desde la edición de cada testimonial
+   */
+  testimonials?: (string | Testimonial)[] | null;
+  /**
+   * Themes asignados desde la edición de cada theme
+   */
+  themes?: (string | Theme)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials".
+ */
+export interface Testimonial {
+  id: string;
+  type: 'impreso' | 'digital' | 'rrss';
+  client: string | Client;
+  medium: string;
+  reach: number;
+  sentiment: 'positive' | 'negative';
+  dateOfNote: string;
+  theme: string | Theme;
+  title: string;
+  mention: string;
+  images: {
+    image?: (string | null) | Media;
+    id?: string | null;
+  }[];
+  section?: string | null;
+  page?: number | null;
+  originalLink?: string | null;
+  spokesperson?: string | null;
+  media?: string | null;
+  journalist?: string | null;
+  extract?: string | null;
+  insights?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  subtitle?: string | null;
+  likes?: number | null;
+  comments?: number | null;
+  shares?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "themes".
+ */
+export interface Theme {
+  id: string;
+  name?: string | null;
+  clients?: (string | Client)[] | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -159,76 +243,12 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "testimonials".
- */
-export interface Testimonial {
-  id: string;
-  type: 'Impreso' | 'digital' | 'rrss';
-  medium: string;
-  reach: number;
-  sentiment: 'positive' | 'negative';
-  'date of note': string;
-  theme: string | Theme;
-  title: string;
-  images: {
-    image?: (string | null) | Media;
-    id?: string | null;
-  }[];
-  section?: string | null;
-  'original link'?: string | null;
-  spokeperson?: string | null;
-  media?: string | null;
-  journalist?: string | null;
-  extract?: string | null;
-  insights?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  subtitle?: string | null;
-  client?: string | null;
-  likes?: number | null;
-  comments?: number | null;
-  shares?: number | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "themes".
- */
-export interface Theme {
-  id: string;
-  name?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "clients".
- */
-export interface Client {
-  id: string;
-  name?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "newsletters".
  */
 export interface Newsletter {
   id: string;
+  title?: string | null;
+  client?: (string | null) | Client;
   frecuency?:
     | ('diario' | 'semanal' | 'quincenal' | 'mensual' | 'bimestral' | 'trimestral' | 'semestral' | 'anual')
     | null;
@@ -286,16 +306,16 @@ export interface PayloadLockedDocument {
         value: string | Testimonial;
       } | null)
     | ({
+        relationTo: 'newsletters';
+        value: string | Newsletter;
+      } | null)
+    | ({
         relationTo: 'themes';
         value: string | Theme;
       } | null)
     | ({
         relationTo: 'clients';
         value: string | Client;
-      } | null)
-    | ({
-        relationTo: 'newsletters';
-        value: string | Newsletter;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -344,6 +364,9 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  name?: T;
+  clients?: T;
+  role?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -378,12 +401,14 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface TestimonialsSelect<T extends boolean = true> {
   type?: T;
+  client?: T;
   medium?: T;
   reach?: T;
   sentiment?: T;
-  'date of note'?: T;
+  dateOfNote?: T;
   theme?: T;
   title?: T;
+  mention?: T;
   images?:
     | T
     | {
@@ -391,17 +416,31 @@ export interface TestimonialsSelect<T extends boolean = true> {
         id?: T;
       };
   section?: T;
-  'original link'?: T;
-  spokeperson?: T;
+  page?: T;
+  originalLink?: T;
+  spokesperson?: T;
   media?: T;
   journalist?: T;
   extract?: T;
   insights?: T;
   subtitle?: T;
-  client?: T;
   likes?: T;
   comments?: T;
   shares?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "newsletters_select".
+ */
+export interface NewslettersSelect<T extends boolean = true> {
+  title?: T;
+  client?: T;
+  frecuency?: T;
+  testimonials?: T;
+  obervations?: T;
+  resume?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -411,6 +450,7 @@ export interface TestimonialsSelect<T extends boolean = true> {
  */
 export interface ThemesSelect<T extends boolean = true> {
   name?: T;
+  clients?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -420,18 +460,9 @@ export interface ThemesSelect<T extends boolean = true> {
  */
 export interface ClientsSelect<T extends boolean = true> {
   name?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "newsletters_select".
- */
-export interface NewslettersSelect<T extends boolean = true> {
-  frecuency?: T;
+  monitorists?: T;
   testimonials?: T;
-  obervations?: T;
-  resume?: T;
+  themes?: T;
   updatedAt?: T;
   createdAt?: T;
 }

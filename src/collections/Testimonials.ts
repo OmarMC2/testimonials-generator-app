@@ -5,16 +5,24 @@ export const Testimonials: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
   },
+  access: {
+    create: ({ req: { user } }) => ['admin', 'monitorist'].includes(user?.role),
+    read: () => true, // Todos pueden leer (ajusta según necesidades)
+    update: ({ req: { user } }) => ['admin', 'monitorist'].includes(user?.role),
+    delete: ({ req: { user } }) => user?.role === 'admin' || user?.role === 'monitorist',
+    // Permisos adicionales para operaciones específicas
+    readVersions: ({ req: { user } }) => ['admin', 'monitorist'].includes(user?.role),
+  },
   fields: [
     {
       name: 'type',
       type: 'select',
-      unique: true,
+
       required: true,
       options: [
         {
           label: 'Impreso',
-          value: 'Impreso',
+          value: 'impreso',
         },
         {
           label: 'Digital',
@@ -25,6 +33,66 @@ export const Testimonials: CollectionConfig = {
           value: 'rrss',
         },
       ],
+    },
+    {
+      name: 'client',
+      type: 'relationship',
+      relationTo: 'clients',
+      required: true,
+      hooks: {
+        afterChange: [
+          async ({ value, operation, previousValue, req, originalDoc }) => {
+            const { payload } = req
+            const currentClientId = value
+            const pastClientId = previousValue || ''
+            const currentTestimonialId = originalDoc.id
+
+            Promise.all(
+              [currentClientId].map(async (currentClientId) => {
+                const client = await payload.findByID({
+                  collection: 'clients',
+                  id: currentClientId,
+                  depth: 0,
+                })
+                const allClientTestimonials = client.testimonials || []
+                if (!allClientTestimonials.includes(currentTestimonialId)) {
+                  await payload.update({
+                    collection: 'clients',
+                    id: currentClientId,
+                    data: {
+                      testimonials: [...allClientTestimonials, currentTestimonialId],
+                    },
+                    depth: 0,
+                  })
+                }
+              }),
+            )
+            if (pastClientId !== '') {
+              Promise.all(
+                [pastClientId].map(async (pastClientId) => {
+                  const client = await payload.findByID({
+                    collection: 'clients',
+                    id: pastClientId,
+                    depth: 0,
+                  })
+                  const allClientTestimonials = client.testimonials || []
+
+                  await payload.update({
+                    collection: 'clients',
+                    id: pastClientId,
+                    data: {
+                      testimonials: allClientTestimonials.filter(
+                        (id) => id !== currentTestimonialId,
+                      ),
+                    },
+                    depth: 0,
+                  })
+                }),
+              )
+            }
+          },
+        ],
+      },
     },
     {
       name: 'medium',
@@ -40,7 +108,7 @@ export const Testimonials: CollectionConfig = {
       name: 'sentiment',
       type: 'select',
       required: true,
-      unique: true,
+
       options: [
         {
           label: 'Positive +',
@@ -53,8 +121,9 @@ export const Testimonials: CollectionConfig = {
       ],
     },
     {
-      name: 'date of note',
+      name: 'dateOfNote',
       type: 'date',
+      label: 'Date of Note',
       required: true,
     },
     {
@@ -65,6 +134,11 @@ export const Testimonials: CollectionConfig = {
     },
     {
       name: 'title',
+      type: 'text',
+      required: true,
+    },
+    {
+      name: 'mention',
       type: 'text',
       required: true,
     },
@@ -85,11 +159,15 @@ export const Testimonials: CollectionConfig = {
       type: 'text',
     },
     {
-      name: 'original link',
+      name: 'page',
+      type: 'number',
+    },
+    {
+      name: 'originalLink',
       type: 'text',
     },
     {
-      name: 'spokeperson',
+      name: 'spokesperson',
       type: 'text',
     },
     {
@@ -112,10 +190,7 @@ export const Testimonials: CollectionConfig = {
       name: 'subtitle',
       type: 'text',
     },
-    {
-      name: 'client',
-      type: 'text',
-    },
+
     {
       name: 'likes',
       type: 'number',

@@ -1,12 +1,24 @@
 import type { CollectionConfig } from 'payload'
 
-export const Newsletters: CollectionConfig = {
+export const Newsletteres: CollectionConfig = {
   slug: 'newsletters',
   admin: {
-    useAsTitle: 'frecuency',
+    useAsTitle: 'title',
+  },
+  access: {
+    read: () => true,
   },
 
   fields: [
+    {
+      name: 'title',
+      type: 'text',
+    },
+    {
+      name: 'client',
+      type: 'relationship',
+      relationTo: 'clients',
+    },
     {
       name: 'frecuency',
       type: 'select',
@@ -45,6 +57,7 @@ export const Newsletters: CollectionConfig = {
         },
       ],
     },
+
     {
       name: 'testimonials',
       type: 'relationship',
