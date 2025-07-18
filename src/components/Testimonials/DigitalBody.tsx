@@ -1,6 +1,6 @@
 import LinkBox from './LinkBox'
 import PropertyBox from './PropertyBox'
-import RichText from '../richText/index'
+import RichText from '@/components/richText'
 
 interface Testimonial {
   id: string
