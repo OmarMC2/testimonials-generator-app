@@ -13,7 +13,7 @@ interface Theme {
   name: string
 }
 
-export default function ExportExcellForm() {
+function ExportExcellForm() {
   const { config } = useConfig()
   const { serverURL } = config
   const [clients, setClients] = useState<Client[]>([])
@@ -226,3 +226,5 @@ export default function ExportExcellForm() {
     </>
   )
 }
+
+export { ExportExcellForm }

@@ -2,9 +2,9 @@
 import React, { useEffect, useState } from 'react'
 import ErrorPage from 'next/error'
 
-import Header from '../components/Testimonials/Header'
-import DigitalBody from '../components/Testimonials/DigitalBody'
-import RRSSBody from '@/components/Testimonials/RRSSBody'
+import { Header } from '../components/Testimonials/Header'
+import { DigitalBody } from '../components/Testimonials/DigitalBody'
+import { RRSSBody } from '@/components/Testimonials/RRSSBody'
 
 interface PageProps {
   id: string

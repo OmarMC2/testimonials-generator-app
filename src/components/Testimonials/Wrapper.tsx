@@ -1,5 +1,7 @@
 import React from 'react'
 
-export default function Wrapper() {
+function Wrapper() {
   return <div className="pagewrapper"></div>
 }
+
+export { Wrapper }

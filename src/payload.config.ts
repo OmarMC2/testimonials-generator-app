@@ -54,7 +54,7 @@ export default buildConfig({
         },
       },
       graphics: {
-        Logo: './components/Login',
+        Logo: './components/Login/index.tsx',
       },
       afterNavLinks: ['./components/excel/ExcellExportNavItem.tsx'],
       afterDashboard: ['./components/excel/ExcellExportSquareItem.tsx'],

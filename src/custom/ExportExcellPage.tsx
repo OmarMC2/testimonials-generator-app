@@ -1,6 +1,6 @@
 import React from 'react'
 // Para hooks
-import ExportExcellForm from './ExportExcellForm'
+import { ExportExcellForm } from './ExportExcellForm'
 
 import { DefaultTemplate } from '@payloadcms/next/templates'
 import type { AdminViewProps } from 'payload'

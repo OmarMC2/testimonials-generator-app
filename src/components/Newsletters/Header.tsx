@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import Logo from '../../custom/Logo'
 
-export default function Header({ frecuency, client, }) {
-  const [title, setTitle] = useState('');
-  useEffect(()=>{
-      setTitle(`Monitoreo ${frecuency} |`)
-  },[frecuency])
-    return (
+function Header({ frecuency, client }) {
+  const [title, setTitle] = useState('')
+  useEffect(() => {
+    setTitle(`Monitoreo ${frecuency} |`)
+  }, [frecuency])
+  return (
     <header>
       <div className="header-container">
         <div className="newsletter-title-container">
@@ -18,3 +18,5 @@ export default function Header({ frecuency, client, }) {
     </header>
   )
 }
+
+export { Header }

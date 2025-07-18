@@ -1,6 +1,6 @@
-import LinkBox from './LinkBox'
-import PropertyBox from './PropertyBox'
-import RichText from '@/components/richText'
+import { LinkBox } from './LinkBox'
+import { PropertyBox } from './PropertyBox'
+import { RichText } from '@/components/richText'
 
 interface Testimonial {
   id: string
@@ -53,7 +53,7 @@ interface Media {
     // Agrega otros tamaños si los tienes configurados
   }
 }
-export default function RRSSBody({ testimonial }: Testimonial) {
+function RRSSBody({ testimonial }: Testimonial) {
   const {
     originalLink,
     reach,
@@ -109,3 +109,5 @@ export default function RRSSBody({ testimonial }: Testimonial) {
     </div>
   )
 }
+
+export { RRSSBody }

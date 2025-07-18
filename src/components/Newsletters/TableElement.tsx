@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function TableElement({ url, title, extract, image, alt, extraClass = '' }) {
+function TableElement({ url, title, extract, image, alt, extraClass = '' }) {
   return (
     <div className={`newsletter-testimonial-table-element ${extraClass}`}>
       <div className="newsletter-testimonial-img-container">
@@ -22,3 +22,5 @@ export default function TableElement({ url, title, extract, image, alt, extraCla
     </div>
   )
 }
+
+export { TableElement }

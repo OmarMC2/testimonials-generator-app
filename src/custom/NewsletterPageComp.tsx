@@ -1,9 +1,9 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import ErrorPage from 'next/error'
-import Header from '@/components/newsletters/Header';
-import TableElement from '@/components/newsletters/TableElement';
-import RichText from '@/components/richText';
+import { Header } from '@/components/newsletters/Header'
+import { TableElement } from '@/components/newsletters/TableElement'
+import { RichText } from '@/components/richText'
 
 interface PageProps {
   id: string
@@ -79,3 +79,5 @@ export default function NewsletterPageComp({ id }: PageProps) {
     </>
   )
 }
+
+export { NewsletterPageComp }

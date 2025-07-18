@@ -21,7 +21,7 @@ import { StrikethroughFeatureClient as StrikethroughFeatureClient_e70f5e05f09f93
 import { UnderlineFeatureClient as UnderlineFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { BoldFeatureClient as BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
-import { default as default_f1290347596c68c443c88ec7b3fbfba9 } from '../../../components/auth/Login'
+import { LoginLogo as LoginLogo_f1290347596c68c443c88ec7b3fbfba9 } from '../../../components/auth/Login'
 import { default as default_032703f8dce410fbe00c77563edddee7 } from '../../../components/excel/ExcellExportSquareItem.tsx'
 import { default as default_f24efdfa32c9ec654f52bbe22a9faa6b } from '../../../components/excel/ExcellExportNavItem.tsx'
 import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
@@ -51,7 +51,7 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#UnderlineFeatureClient": UnderlineFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#BoldFeatureClient": BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#ItalicFeatureClient": ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
-  "./components/auth/Login#default": default_f1290347596c68c443c88ec7b3fbfba9,
+  "./components/auth/Login#LoginLogo": LoginLogo_f1290347596c68c443c88ec7b3fbfba9,
   "./components/excel/ExcellExportSquareItem.tsx#default": default_032703f8dce410fbe00c77563edddee7,
   "./components/excel/ExcellExportNavItem.tsx#default": default_f24efdfa32c9ec654f52bbe22a9faa6b,
   "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24,

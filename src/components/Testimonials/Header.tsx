@@ -18,3 +18,4 @@ export default function Header({ title, medium }: PageProps) {
     </header>
   )
 }
+export { Header }

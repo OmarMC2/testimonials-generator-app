@@ -5,7 +5,8 @@ type Props = {
   data: SerializedEditorState
 } & React.HTMLAttributes<HTMLDivElement>
 
-export default function RichText(props: Props) {
+function RichText(props: Props) {
   const { className, ...rest } = props
   return <RichTextConverter {...rest} className={className} />
 }
+export { RichText }
