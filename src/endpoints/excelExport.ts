@@ -40,8 +40,12 @@ export const excelExport = async (req: Request & { payload: Payload }) => {
     const results = await payload.find({
       collection: 'testimonials',
       where: {
-        client: clientID,
-        theme: themeID,
+        client: {
+          equals: clientID,
+        },
+        theme: {
+          equals: themeID,
+        },
         createdAt: {
           greater_than_equal: startDate,
           less_than_equal: endDate,
